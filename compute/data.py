@@ -34,7 +34,8 @@ def get_data(selection=0, table='dianpingcontent'):
     """
     print('Collecting Data')
     from pymysql import connect
-    database = connect(host='localhost', user='root', passwd='1111', db='dianping', charset='utf8')
+    # database = connect(host='localhost', user='root', passwd='1111', db='dianping', charset='utf8')
+    database = connect(host='localhost', user='root', passwd='mysql', db='Shanghai90k', charset='utf8')
     cursor = database.cursor()
     try:
         if selection == 0:
