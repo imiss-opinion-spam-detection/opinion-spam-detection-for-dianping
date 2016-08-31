@@ -1,0 +1,12 @@
+爬虫：
+  从大众点评上爬取评论，并按照店铺进行文件的划分，存储形式都是TXT格式
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+分词判断：（使用分词的方法进行情感判断，但后来改为使用评级进行这一工作，目的在于生成一个训练集为后续的机器学习产生分类器使用）
+  extract用于上述TXT文件中 内容（content）信息的提取。（带有关键字）
+  extract1用于分词判断时关键字的剔除。
+  textprocessing用于信息的预处理（对内容信息进行分词）
+  pos neg senti dict feature用于分词判断以及存储。（xlsx格式）
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+机器学习：
+  store sentiment classifier用于进行分类器的训练。
+  pos neg ml feature使用分类器对评论进行情感极性的判断。

@@ -1,0 +1,22 @@
+### What did I do ###
+
+- 7.25
+  - Reading Paper.
+- 7.26
+  - Talking about using which programming language.
+  - Learning Python.
+  - Run spider but finally blocked by the website.
+  - Learning basic things about spiders.
+  - Learning basic things about database.
+- 7.27
+  - Learning about NetworkX Library.
+  - Coding basic data structure.
+  - Define several classes.
+- 7.28
+  - Coding about features.
+- 7.29
+  - Learning more Python.
+  - Coding more about features.
+- 8.1
+  - Learning implement of NetworkX, dict, list.  
+  - ​Learning a litt
