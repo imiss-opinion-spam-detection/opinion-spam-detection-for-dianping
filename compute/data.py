@@ -160,7 +160,7 @@ def data_to_graph(table=""):
                 new_node = Review(id_number=id_number, text=txt[2], date=date, rst1=txt[1][0], rst2=txt[1][1],
                                   rst3=txt[1][2])
             elif class_name == "P":
-                new_node = Product(id_number=id_number, name=txt)
+                new_node = Product(id_number=id_number, name=txt[0])
             else:
                 raise NameError
             new_node.neighbor = neighbor
@@ -297,7 +297,6 @@ def show_result(graph=Graph(), mode='cmd'):
                 'Opinion Spam Detection System\n' \
                 '-----------------------------\n' \
                 'Command : \n' \
-                '    compute : compute about new data\n' \
                 '    load : load computed data from database\n' \
                 '    save : save info of all nodes in a database/txt\n' \
                 '    show : show info of all nodes\n' \
@@ -320,19 +319,37 @@ def show_result(graph=Graph(), mode='cmd'):
                 print('... Bye')
                 break
 
-            elif command == 'write':
-                try:
-                    file = open('records-' + str(node_count[1]) + strftime('-%Y%m%d%H%M%S', localtime(time())) + '.txt',
-                                'w', encoding='utf-8')
-                    file.write(node_count_text)
-                    for node in graph_list:
-                        file.write(node.__str__())
-                except UnicodeEncodeError:
-                    print('UnicodeEncodeError')
-                finally:
-                    file.close()
-            elif command == 'database':  # TODO imp
-                set_data(graph=graph, number=node_count[1])
+            elif command == 'save':
+                type = str(input("... choose a type : 1->Database 2->Text "))
+                if type == "1":
+                    set_data(graph=graph, number=node_count[1])
+                elif type == "2":
+                    try:
+                        file = open(
+                            'records-' + str(node_count[1]) + strftime('-%Y%m%d%H%M%S', localtime(time())) + '.txt',
+                            'w', encoding='utf-8')
+                        file.write(node_count_text)
+                        for node in graph_list:
+                            file.write(node.__str__())
+                    except UnicodeEncodeError:
+                        print('UnicodeEncodeError')
+                    finally:
+                        file.close()
+                else:
+                    print("CommandError\a")
+                    
+            elif command == "load":
+                print("... warning : if you load a table, you will lose your current used table")
+                table = str(input("... input the table's name "))
+                graph = data_to_graph(table=table)
+                graph_list = graph.nodes()
+                graph_dict = {node.id_number: node for node in graph.nodes()}
+                graph_list.sort(key=lambda node: node.belief[0])
+
+            elif command == 'show':
+                print(node_count_text)
+                for node in graph_list:
+                    print(node)
 
             elif command == 'select':
                 try:
@@ -354,22 +371,21 @@ def show_result(graph=Graph(), mode='cmd'):
                     print(str(len(graph.neighbors(cur_node))) + ' neighbor(s)')
                     for neighbor in graph.neighbors(cur_node):
                         print(neighbor)
-            elif command == 'usage':
-                print(usage)
-            elif command == 'clear':
 
-                system('reset')
-                print(usage)
             elif command == 'sort':
                 try:
                     selection = int(input('... mode : 0->greater 1->less '))
                     graph_list.sort(key=lambda node: node.belief[selection])
                 except:
                     print('InputError\a')
-            elif command == 'all':
-                print(node_count_text)
-                for node in graph_list:
-                    print(node)
+
+            elif command == 'usage':
+                print(usage)
+
+            elif command == 'clear':
+
+                system('reset')
+                print(usage)
 
             else:
                 print('CommandError')
@@ -389,7 +405,7 @@ def show_result(graph=Graph(), mode='cmd'):
 
 
 #
-# def show_graph(graph=Graph()):
+# def plot_graph(graph=Graph()):
 #     from matplotlib import pyplot
 #     from networkx import draw
 #     draw(graph)
@@ -401,7 +417,7 @@ def say_finish(times=1):
     print('This program is finish')
     from sys import platform
     if platform == 'darwin':
-        voice_list = ['Daniel', 'Samantha']
+        voice_list = ['Allison', 'Daniel', 'Samantha']
         for i in range(times):
             from os import system
             system('say -v %s This program is finish' % voice_list[randint(0, len(voice_list) - 1)])
