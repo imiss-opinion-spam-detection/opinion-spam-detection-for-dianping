@@ -34,8 +34,7 @@ def get_data(selection=0, table='dianpingcontent'):
     """
     print('Collecting Data')
     from pymysql import connect
-    # database = connect(host='localhost', user='root', passwd='1111', db='dianping', charset='utf8')
-    database = connect(host='localhost', user='root', passwd='mysql', db='Shanghai90k', charset='utf8')
+    database = connect(host='localhost', user='root', passwd='1111', db='dianping', charset='utf8')
     cursor = database.cursor()
     try:
         if selection == 0:
@@ -325,17 +324,11 @@ def show_result(graph=Graph(), mode='cmd'):
                 if type == "1":
                     set_data(graph=graph, number=node_count[1])
                 elif type == "2":
-                    try:
-                        file = open(
-                            'records-' + str(node_count[1]) + strftime('-%Y%m%d%H%M%S', localtime(time())) + '.txt',
-                            'w', encoding='utf-8')
+                    with  open(
+                            'records-' + str(node_count[1]) + strftime('-%Y%m%d%H%M%S', localtime(time())) + '.txt', 'w', encoding='utf-8') as file:
                         file.write(node_count_text)
                         for node in graph_list:
                             file.write(node.__str__())
-                    except UnicodeEncodeError:
-                        print('UnicodeEncodeError')
-                    finally:
-                        file.close()
                 else:
                     print("CommandError\a")
                     
