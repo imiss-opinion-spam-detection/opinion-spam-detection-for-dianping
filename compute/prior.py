@@ -101,9 +101,7 @@ def prior_user_content_similarity_max(graph=Graph(), user=User()):
     else:
         max_similarity = 512
         for review in graph.neighbors_iter(user):
-            try:
-                review.text_fingerprint
-            except AttributeError:
+            if not hasattr(review, "text_fingerprint")
                 review.text_fingerprint = string_to_simhash(review.text)
         for review_1 in graph.neighbors_iter(user):
             for review_2 in graph.neighbors_iter(user):
@@ -391,13 +389,15 @@ def set_prior(graph=Graph()):
             prior_product_statistic['average_review_length'].append(node.feature_value['average_review_length'])
 
             prior_product_content_similarity_average(graph, node)
-            prior_product_statistic['content_similarity_average'].append(node.feature_value['content_similarity_average'])
+            prior_product_statistic['content_similarity_average'].append(
+                node.feature_value['content_similarity_average'])
 
             prior_product_content_similarity_max(graph, node)
             prior_product_statistic['content_similarity_max'].append(node.feature_value['content_similarity_max'])
 
             prior_product_entropy_rating_distribution(graph, node)
-            prior_product_statistic['entropy_rating_distribution'].append(node.feature_value['entropy_rating_distribution'])
+            prior_product_statistic['entropy_rating_distribution'].append(
+                node.feature_value['entropy_rating_distribution'])
 
             prior_product_max_number_review(graph, node)
             prior_product_statistic['max_number_review'].append(node.feature_value['max_number_review'])
